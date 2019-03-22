@@ -1,0 +1,10 @@
+version: "3"
+services:
+  db-sql:
+    image: "postgres:11.1"
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: "db-sql"
+      POSTGRES_USER: "admin"
+      POSTGRES_PASSWORD: "SQL"
