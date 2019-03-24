@@ -26,11 +26,15 @@ class SQLIntSpec extends Specification {
 
     def dropTable(table) {
         println("Drop table: $table")
-        sql.execute("drop table $table" as String)
+        sql.execute("drop table $table cascade" as String)
     }
 
     void assertTableExists(table) {
         assert sql.rows("select * from pg_tables pt where pt.tablename = '$table'" as String).size() == 1
+    }
+
+    void assertTableDoesNotExist(table) {
+        assert sql.rows("select * from pg_tables pt where pt.tablename = '$table'" as String).empty
     }
 
 }
