@@ -1,20 +1,20 @@
-import com.zaxxer.hikari.HikariDataSource
-import groovy.sql.Sql
-import spock.lang.Shared
-import spock.lang.Specification
+package com.kovalskiy91.selfdev.sql.postgres
 
-class SQLIntSpec extends Specification {
+import com.kovalskiy91.selfdev.sql.DatabaseIntSpec
+import groovy.sql.Sql
+import org.postgresql.Driver
+import spock.lang.Shared
+
+
+class PostgresDatabaseIntSpec extends DatabaseIntSpec {
 
     @Shared
-    Sql sql = new Sql(dataSource())
-
-    def dataSource() {
-        def dataSource = new HikariDataSource()
-        dataSource.jdbcUrl = "jdbc:postgresql://localhost:5432/db-sql"
-        dataSource.username = "admin"
-        dataSource.password = "SQL"
-        dataSource
-    }
+    def sql = new Sql(dataSourceFrom(
+            Driver.class,
+            "jdbc:postgresql://localhost:5432/db-sql",
+            "admin",
+            "SQL"
+    ))
 
     def setup() {
         dropAllTables()
@@ -36,5 +36,6 @@ class SQLIntSpec extends Specification {
     void assertTableDoesNotExist(table) {
         assert sql.rows("select * from pg_tables pt where pt.tablename = '$table'" as String).empty
     }
+
 
 }

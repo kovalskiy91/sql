@@ -1,4 +1,6 @@
-class DDLIntSpec extends SQLIntSpec {
+package com.kovalskiy91.selfdev.sql.postgres
+
+class DDLIntSpec extends PostgresDatabaseIntSpec {
 
     def "should create table"() {
         given:
